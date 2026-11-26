@@ -741,6 +741,7 @@
                     <input type="url" id="elevenLabsEndpointInput" placeholder="https://your-backend.example.com/api/elevenlabs-tts">
                   </div>
                   <div class="form-group">
+                    
                     <label for="elevenLabsVoiceIdInput">Preferred Voice ID (Non-secret)</label>
                     <input type="text" id="elevenLabsVoiceIdInput" placeholder="ELEVENLABS_VOICE_ID_PLACEHOLDER">
                   </div>
@@ -858,5 +859,13 @@
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
 
   <script src="app.js"></script>
-</body>
+</body><link rel="stylesheet" href="https://vdk-viber-runtime-prod.bot.botpress.host/edge/webchat.css" />
+<script src="https://vdk-viber-runtime-prod.bot.botpress.host/edge/webchat.js"></script>
+<script>
+  fetch("https://vdk-viber-runtime-prod.bot.botpress.host/edge/bots/8e6392c4-17d5-4d08-ae0a-82fca10bb677/config")
+    .then((res) => res.json())
+    .then(({ webchat }) =>
+      VdkEdgeWebchat.mount({ ...webchat, mode: "bubble", baseUrl: "https://vdk-viber-runtime-prod.bot.botpress.host", botId: "8e6392c4-17d5-4d08-ae0a-82fca10bb677" })
+    )
+</script>
 </html>
