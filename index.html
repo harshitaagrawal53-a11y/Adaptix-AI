@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ADAPTIX — Student Academic Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Academic Navigation">
+      <div class="sidebar-header">
+        <a href="#dashboard" class="brand" data-nav="dashboard">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-name">ADAPTIX</span>
+            <span class="brand-tag">Academic Assistant</span>
+          </span>
+        </a>
+        <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-section-label">Study Workspace</div>
+      <nav class="sidebar-nav" id="sidebarNav">
+        <button type="button" class="nav-item is-active" data-view="dashboard" aria-current="page">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="9" rx="2"></rect>
+            <rect x="14" y="3" width="7" height="5" rx="2"></rect>
+            <rect x="14" y="12" width="7" height="9" rx="2"></rect>
+            <rect x="3" y="16" width="7" height="5" rx="2"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="tasks">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span>Academic Tasks</span>
+          <span class="nav-badge" id="navPendingCount">0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="deadlines">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Upcoming Deadlines</span>
+          <span class="nav-badge nav-badge-urgent" id="navUrgentCount">0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="assistant">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>ADAPTIX AI Assistant</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="documents">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
+          </svg>
+          <span>Study Resources</span>
+          <span class="nav-badge" id="navDocsCount">0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="progress">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <span>Progress Tracker</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="integrations">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+          <span>Integrations</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="student-mini-card">
+          <div class="student-avatar" aria-hidden="true">M</div>
+          <div class="student-mini-meta">
+            <div class="student-mini-name">Megha</div>
+            <div class="student-mini-sub">JECRC University &bull; Sem 1</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open navigation menu" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="topbar-titles">
+            <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            <p class="page-subtitle" id="pageSubtitle">Personal academic overview and subject progress</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <span class="demo-pill" title="Initial tasks are fictional demo examples stored locally in your browser">
+            <span class="demo-dot" aria-hidden="true"></span>
+            Demo Data Enabled
+          </span>
+          <button type="button" class="btn btn-secondary btn-sm" id="quickAskAiBtn">
+            Ask ADAPTIX AI
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" id="quickAddTaskBtn">
+            + Add Task
+          </button>
+          <button type="button" class="bell-btn" id="notificationBellBtn" aria-label="Open notification history" aria-expanded="false" aria-controls="notificationPanel">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="bell-badge" id="notifUnreadBadge" hidden>0</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace-content">
+        <!-- Demo Data Disclosure Banner -->
+        <div class="demo-banner" role="note">
+          <span class="badge badge-demo">DEMO DATA</span>
+          <span>Sample tasks and deadlines shown initially are fictional examples for demonstration, not confirmed JECRC University assignments. You can edit, delete, or add your own.</span>
+          <button type="button" class="link-btn" id="resetDemoBtn">Restore Demo Tasks</button>
+        </div>
+
+        <!-- VIEW 1: DASHBOARD -->
+        <section class="view-section is-active" id="view-dashboard" data-view-panel="dashboard">
+          <!-- Hero Welcome + Student Profile -->
+          <div class="hero-grid">
+            <article class="card welcome-card">
+              <div class="welcome-top">
+                <div>
+                  <span class="welcome-eyebrow">1st Semester Academic Workspace</span>
+                  <h2 class="welcome-heading">Hey Megha! Ready to organise your day?</h2>
+                  <p class="welcome-copy" id="dashboardWelcomeCopy">Loading your academic summary...</p>
+                </div>
+                <div class="welcome-actions">
+                  <button type="button" class="btn btn-primary btn-sm" data-nav-target="tasks">Manage Tasks</button>
+                  <button type="button" class="btn btn-soft btn-sm" data-nav-target="deadlines">Check Deadlines</button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="enableNotificationsBtn">
+                    Enable Notifications
+                  </button>
+                </div>
+                <div class="notif-inline-status" id="notifDashboardStatus">
+                  <span class="badge badge-lavender" id="notifStatusBadge">Not Enabled</span>
+                  <span id="notifStatusText">Click Enable Notifications for deadline alerts while ADAPTIX is open.</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="card profile-card">
+              <div class="profile-header">
+                <div class="profile-avatar" aria-hidden="true">M</div>
+                <div>
+                  <h3 class="profile-name">Megha</h3>
+                  <p class="profile-institute">JECRC University</p>
+                </div>
+              </div>
+              <dl class="profile-details">
+                <div class="profile-detail-row">
+                  <dt>Programme</dt>
+                  <dd>B.Tech – CSE</dd>
+                </div>
+                <div class="profile-detail-row">
+                  <dt>Semester</dt>
+                  <dd>1st Semester</dd>
+                </div>
+                <div class="profile-detail-row">
+                  <dt>Subjects</dt>
+                  <dd>6 Enrolled</dd>
+                </div>
+              </dl>
+            </article>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="kpi-grid" id="dashboardKpiGrid"></div>
+
+          <!-- Today's Focus + Quick Deadlines -->
+          <div class="dashboard-split">
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Today&rsquo;s Focus</h2>
+                  <p class="card-desc">Top priorities based on urgency, due date, and status</p>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm" data-nav-target="tasks">All tasks</button>
+              </div>
+              <div class="card-body" id="todaysFocusList"></div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Quick AI Check-In</h2>
+                  <p class="card-desc">Ask ADAPTIX AI about your pending workload</p>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm" data-nav-target="assistant">Open chat</button>
+              </div>
+              <div class="card-body">
+                <div class="quick-ai-box" id="dashboardAiSummary"></div>
+                <div class="quick-prompt-chips" id="dashboardPromptChips">
+                  <button type="button" class="prompt-chip" data-ai-prompt="What should I complete today?">What should I complete today?</button>
+                  <button type="button" class="prompt-chip" data-ai-prompt="Which subject has the most pending work?">Most pending subject?</button>
+                  <button type="button" class="prompt-chip" data-ai-prompt="Do I have any practical files pending?">Practical files pending?</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- My Subjects (6 cards) -->
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">My Subjects</h2>
+                <p class="card-desc">Click any subject card to filter its tasks and practicals</p>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" data-nav-target="progress">View progress</button>
+            </div>
+            <div class="card-body">
+              <div class="subjects-grid" id="dashboardSubjectsGrid"></div>
+            </div>
+          </article>
+
+          <!-- Integration Status Dashboard -->
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">External Integrations Status</h2>
+                <p class="card-desc">Live connection status for AI, cloud sync, automation, study prep &amp; voice</p>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" data-nav-target="integrations">Configure</button>
+            </div>
+            <div class="card-body">
+              <div class="integration-status-grid" id="dashboardIntegrationsGrid"></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- VIEW 2: ACADEMIC TASK MANAGER -->
+        <section class="view-section" id="view-tasks" data-view-panel="tasks" hidden>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" id="taskFormHeading">Add Academic Task</h2>
+                <p class="card-desc">Track assignments, practical files, lab records, exams and more</p>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" id="cancelEditTaskBtn" hidden>Cancel Edit</button>
+            </div>
+            <div class="card-body">
+              <form id="taskForm" class="task-form">
+                <input type="hidden" id="taskEditId" value="">
+                <div class="form-grid-3">
+                  <div class="form-group span-2-md">
+                    <label for="taskTitle">Task Title</label>
+                    <input type="text" id="taskTitle" placeholder="e.g., Write CPLT Array Practical File" required maxlength="140">
+                  </div>
+                  <div class="form-group">
+                    <label for="taskSubject">Subject</label>
+                    <select id="taskSubject" required></select>
+                  </div>
+                  <div class="form-group">
+                    <label for="taskCategory">Task Category</label>
+                    <select id="taskCategory" required></select>
+                  </div>
+                  <div class="form-group">
+                    <label for="taskDueDate">Due Date</label>
+                    <input type="date" id="taskDueDate" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="taskDueTime">Due Time</label>
+                    <input type="time" id="taskDueTime" value="23:59">
+                  </div>
+                  <div class="form-group">
+                    <label for="taskPriority">Priority</label>
+                    <select id="taskPriority" required>
+                      <option value="High">High</option>
+                      <option value="Medium" selected>Medium</option>
+                      <option value="Low">Low</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="taskStatus">Status</label>
+                    <select id="taskStatus" required>
+                      <option value="Pending" selected>Pending</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="taskDescription">Description / Notes</label>
+                  <textarea id="taskDescription" rows="2" placeholder="Add syllabus topics, lab experiment numbers, or submission notes..." maxlength="400"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary" id="taskSubmitBtn">Save Task</button>
+                </div>
+              </form>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header wrap-header">
+              <div>
+                <h2 class="card-title">All Academic Tasks</h2>
+                <p class="card-desc" id="tasksFilterSummary">Showing all tasks</p>
+              </div>
+              <div class="toolbar-controls">
+                <input type="search" id="taskSearchInput" class="input-compact" placeholder="Search tasks..." aria-label="Search tasks">
+                <select id="taskFilterSubject" class="input-compact" aria-label="Filter by subject"></select>
+                <select id="taskFilterCategory" class="input-compact" aria-label="Filter by category"></select>
+                <select id="taskFilterStatus" class="input-compact" aria-label="Filter by status">
+                  <option value="ALL">All Statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+                <select id="taskSortBy" class="input-compact" aria-label="Sort tasks">
+                  <option value="deadline-asc">Deadline: Earliest</option>
+                  <option value="deadline-desc">Deadline: Latest</option>
+                  <option value="priority">Priority: High to Low</option>
+                </select>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="task-list" id="tasksListContainer"></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- VIEW 3: UPCOMING DEADLINES -->
+        <section class="view-section" id="view-deadlines" data-view-panel="deadlines" hidden>
+          <div class="kpi-grid" id="deadlineSummaryGrid"></div>
+
+          <div class="deadlines-grid">
+            <article class="card deadline-bucket-card is-overdue">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Overdue Tasks</h2>
+                  <p class="card-desc">Past due date and not yet completed</p>
+                </div>
+                <span class="badge badge-urgent" id="overdueBadge">0</span>
+              </div>
+              <div class="card-body" id="overdueTasksList"></div>
+            </article>
+
+            <article class="card deadline-bucket-card is-today">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Due Today</h2>
+                  <p class="card-desc">Needs attention before end of day</p>
+                </div>
+                <span class="badge badge-today" id="dueTodayBadge">0</span>
+              </div>
+              <div class="card-body" id="dueTodayTasksList"></div>
+            </article>
+
+            <article class="card deadline-bucket-card is-tomorrow">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Due Tomorrow</h2>
+                  <p class="card-desc">Prepare submissions ahead of time</p>
+                </div>
+                <span class="badge badge-tomorrow" id="dueTomorrowBadge">0</span>
+              </div>
+              <div class="card-body" id="dueTomorrowTasksList"></div>
+            </article>
+
+            <article class="card deadline-bucket-card is-week">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Due This Week</h2>
+                  <p class="card-desc">Upcoming within the next 7 days</p>
+                </div>
+                <span class="badge badge-lavender" id="dueWeekBadge">0</span>
+              </div>
+              <div class="card-body" id="dueWeekTasksList"></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- VIEW 4: ADAPTIX AI ASSISTANT (Local + Botpress Embed + Voice Listen) -->
+        <section class="view-section" id="view-assistant" data-view-panel="assistant" hidden>
+          <div class="assistant-layout">
+            <article class="card chat-card">
+              <div class="card-header wrap-header">
+                <div class="ai-header-brand">
+                  <span class="ai-avatar" aria-hidden="true">AI</span>
+                  <div>
+                    <h2 class="card-title">ADAPTIX AI Assistant</h2>
+                    <p class="card-desc">Ask about assignments, deadlines, subjects &amp; study materials</p>
+                  </div>
+                </div>
+                <div class="toolbar-controls">
+                  <span class="badge badge-lavender" id="aiEngineModeBadge">Local Grounded Mode</span>
+                  <button type="button" class="btn btn-soft btn-sm" id="readUrgentVoiceBtn">Listen: Reminders</button>
+                  <button type="button" class="btn btn-ghost btn-sm" id="stopVoiceBtn" hidden>Stop Audio</button>
+                  <button type="button" class="btn btn-ghost btn-sm" id="clearChatBtn">Clear Chat</button>
+                </div>
+              </div>
+
+              <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+
+              <div class="chat-suggestions" aria-label="Suggested academic questions">
+                <button type="button" class="prompt-chip" data-chat-suggest="What assignments are pending?">What assignments are pending?</button>
+                <button type="button" class="prompt-chip" data-chat-suggest="What should I complete today?">What should I complete today?</button>
+                <button type="button" class="prompt-chip" data-chat-suggest="Which subject has the most pending work?">Which subject has the most pending work?</button>
+                <button type="button" class="prompt-chip" data-chat-suggest="What deadlines are coming this week?">What deadlines are coming this week?</button>
+                <button type="button" class="prompt-chip" data-chat-suggest="Do I have any practical files pending?">Do I have any practical files pending?</button>
+                <button type="button" class="prompt-chip" data-chat-suggest="What study materials have I uploaded?">What study materials are uploaded?</button>
+                <button type="button" class="prompt-chip" data-chat-suggest="Help me prioritise my workload.">Help me prioritise my workload.</button>
+              </div>
+
+              <form id="chatForm" class="chat-composer">
+                <label for="chatInput" class="sr-only">Ask ADAPTIX AI a question</label>
+                <input type="text" id="chatInput" placeholder="Ask about assignments, deadlines, subjects, or study materials..." autocomplete="off" required>
+                <button type="submit" class="btn btn-primary">Send</button>
+              </form>
+            </article>
+
+            <div class="stack-col">
+              <article class="card" id="botpressEmbedCard">
+                <div class="card-header">
+                  <div>
+                    <h2 class="card-title">Botpress Official Webchat</h2>
+                    <p class="card-desc">Connect your published Botpress embed scripts</p>
+                  </div>
+                  <span class="badge badge-urgent" id="botpressCardStatusBadge">Not Connected</span>
+                </div>
+                <div class="card-body">
+                  <div class="info-callout" id="botpressPlaceholderBox">
+                    <strong>Webchat Embed Slot:</strong> Paste your official Botpress <code>inject.js</code> and bot configuration script URLs below (or in <code>app.js</code> under <code>INTEGRATION_PLACEHOLDERS.botpress</code>). No credentials are invented.
+                  </div>
+                  <form id="botpressConfigForm" class="stack-form">
+                    <div class="form-group">
+                      <label for="botpressInjectUrl">Botpress Inject Script URL</label>
+                      <input type="url" id="botpressInjectUrl" placeholder="https://cdn.botpress.cloud/webchat/v2.x/inject.js">
+                    </div>
+                    <div class="form-group">
+                      <label for="botpressConfigUrl">Botpress Bot Config Script URL</label>
+                      <input type="url" id="botpressConfigUrl" placeholder="https://files.bpcontent.cloud/xxxx/xxxx/config.js">
+                    </div>
+                    <div class="form-actions">
+                      <button type="submit" class="btn btn-primary btn-sm">Load Botpress Webchat</button>
+                      <button type="button" class="btn btn-secondary btn-sm" id="resetBotpressBtn">Disconnect</button>
+                    </div>
+                  </form>
+                  <div id="botpressWebchatContainer" class="botpress-host"></div>
+                </div>
+              </article>
+
+              <article class="card">
+                <div class="card-header">
+                  <div>
+                    <h2 class="card-title">Voice Assistant (ElevenLabs)</h2>
+                    <p class="card-desc">Listen to AI answers, reminders &amp; study explanations</p>
+                  </div>
+                  <span class="badge badge-today" id="voiceCardStatusBadge">Setup Required</span>
+                </div>
+                <div class="card-body">
+                  <p class="muted-note" id="voiceCardStatusText">
+                    ElevenLabs API credentials belong on a secure backend endpoint. Click <strong>Listen</strong> on any AI answer to preview with browser speech fallback, or connect your TTS backend in Integrations.
+                  </p>
+                  <button type="button" class="btn btn-soft btn-sm" data-nav-target="integrations">Configure Voice Backend</button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 5: STUDY RESOURCES & NOTEBOOKLM WORKFLOW -->
+        <section class="view-section" id="view-documents" data-view-panel="documents" hidden>
+          <div class="two-col-layout">
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Add Study Resource</h2>
+                  <p class="card-desc">Organise notes, PDFs, lab manuals, guides &amp; notices</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="info-callout">
+                  <strong>Local Prototype Note:</strong> Selected file names, categories, subjects, and upload dates are saved in your browser&rsquo;s <code>localStorage</code>. Document contents are not automatically parsed.
+                </div>
+
+                <form id="documentForm" class="stack-form">
+                  <div class="form-group">
+                    <label for="docFileInput">Choose File</label>
+                    <input type="file" id="docFileInput" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.md,.png,.jpg,.jpeg" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="docCategory">Resource Type</label>
+                    <select id="docCategory" required>
+                      <option value="Subject notes">Subject notes</option>
+                      <option value="Study guides">Study guides</option>
+                      <option value="Assignment PDFs">Assignment PDFs</option>
+                      <option value="Practical instructions">Practical instructions</option>
+                      <option value="Lab manuals">Lab manuals</option>
+                      <option value="Faculty notices">Faculty notices</option>
+                      <option value="Exam timetables">Exam timetables</option>
+                      <option value="Presentation instructions">Presentation instructions</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="docSubject">Related Subject</label>
+                    <select id="docSubject" required></select>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Study Resource</button>
+                  </div>
+                </form>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header wrap-header">
+                <div>
+                  <h2 class="card-title">Study Materials Library</h2>
+                  <p class="card-desc" id="docsCountLabel">0 resources stored locally</p>
+                </div>
+                <select id="docFilterCategory" class="input-compact" aria-label="Filter resources by type">
+                  <option value="ALL">All Resource Types</option>
+                  <option value="Subject notes">Subject notes</option>
+                  <option value="Study guides">Study guides</option>
+                  <option value="Assignment PDFs">Assignment PDFs</option>
+                  <option value="Practical instructions">Practical instructions</option>
+                  <option value="Lab manuals">Lab manuals</option>
+                  <option value="Faculty notices">Faculty notices</option>
+                  <option value="Exam timetables">Exam timetables</option>
+                  <option value="Presentation instructions">Presentation instructions</option>
+                </select>
+              </div>
+              <div class="card-body">
+                <div id="documentsList" class="documents-list"></div>
+              </div>
+            </article>
+          </div>
+
+          <article class="card">
+            <div class="card-header wrap-header">
+              <div>
+                <h2 class="card-title">NotebookLM Knowledge-Preparation Workflow</h2>
+                <p class="card-desc">Separate study preparation workflow (NotebookLM has no public REST API)</p>
+              </div>
+              <span class="badge badge-lavender">Manual Workflow</span>
+            </div>
+            <div class="card-body">
+              <div class="two-col-layout">
+                <div class="stack-form">
+                  <p class="muted-note">
+                    Export a structured Markdown study pack of Megha&rsquo;s 6 subjects, open tasks, and uploaded study materials to upload directly into your Google NotebookLM notebook.
+                  </p>
+                  <div class="form-actions">
+                    <button type="button" class="btn btn-primary btn-sm" id="exportNotebookPackBtn">Export NotebookLM Study Pack (.md)</button>
+                  </div>
+                </div>
+                <form id="notebookLinkForm" class="stack-form">
+                  <div class="form-group">
+                    <label for="notebookLmUrlInput">Your Personal NotebookLM URL (Optional)</label>
+                    <input type="url" id="notebookLmUrlInput" placeholder="https://notebooklm.google.com/notebook/...">
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-secondary btn-sm">Save Notebook Link</button>
+                    <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" class="btn btn-soft btn-sm" id="openNotebookLmLink">Open NotebookLM</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- VIEW 6: PROGRESS TRACKER -->
+        <section class="view-section" id="view-progress" data-view-panel="progress" hidden>
+          <div class="kpi-grid" id="progressKpiGrid"></div>
+
+          <div class="progress-layout">
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Overall Academic Completion</h2>
+                  <p class="card-desc">Completion ratio across all tasks in 1st Semester</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="ring-chart-wrap" id="overallProgressChart"></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Subject-wise Completion</h2>
+                  <p class="card-desc">Progress across your six CSE subjects</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="subject-progress-list" id="subjectProgressBars"></div>
+              </div>
+            </article>
+          </div>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Workload by Task Category</h2>
+                <p class="card-desc">Visual distribution of completed vs. remaining work</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="category-chart-grid" id="categoryProgressChart"></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- VIEW 7: INTEGRATIONS DASHBOARD & ADAPTERS -->
+        <section class="view-section" id="view-integrations" data-view-panel="integrations" hidden>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Integration Status Dashboard</h2>
+                <p class="card-desc">Honest status across all connected tools and backend adapters (no credentials exposed in frontend JS)</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="integration-status-grid" id="integrationsOverviewGrid"></div>
+            </div>
+          </article>
+
+          <div class="integrations-cards-grid">
+            <!-- Google Sheets Schema & Sync Adapter -->
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Google Sheets Sync Adapter</h2>
+                  <p class="card-desc">4-sheet schema: Students, Subjects, Assignments, Progress</p>
+                </div>
+                <span class="badge badge-today" id="sheetsStatusBadge">Setup Required</span>
+              </div>
+              <div class="card-body">
+                <div class="info-callout">
+                  Keep Google API keys &amp; service account secrets on your backend or Google Apps Script Web App—never in frontend JS.
+                </div>
+                <div class="schema-pills">
+                  <span class="badge badge-lavender">Sheet 1: Students</span>
+                  <span class="badge badge-lavender">Sheet 2: Subjects</span>
+                  <span class="badge badge-lavender">Sheet 3: Assignments</span>
+                  <span class="badge badge-lavender">Sheet 4: Progress</span>
+                </div>
+                <form id="sheetsConfigForm" class="stack-form">
+                  <div class="form-group">
+                    <label for="sheetsEndpointInput">Secure Backend / Apps Script Proxy URL</label>
+                    <input type="url" id="sheetsEndpointInput" placeholder="https://your-backend.example.com/api/sheets-sync">
+                  </div>
+                  <div class="form-actions wrap-actions">
+                    <button type="submit" class="btn btn-primary btn-sm">Save Endpoint</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="testSheetsBtn">Test Retrieve</button>
+                    <button type="button" class="btn btn-soft btn-sm" id="exportSheetsJsonBtn">Export 4-Sheet JSON</button>
+                  </div>
+                </form>
+                <pre class="schema-preview" id="sheetsSchemaPreview" aria-label="Google Sheets 4-sheet payload preview"></pre>
+              </div>
+            </article>
+
+            <!-- Zapier Automation Webhooks -->
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Zapier Automation Hooks</h2>
+                  <p class="card-desc">Events: assignment-created, assignment-completed, deadline-reminder</p>
+                </div>
+                <span class="badge badge-today" id="zapierStatusBadge">Setup Required</span>
+              </div>
+              <div class="card-body">
+                <div class="info-callout">
+                  Route Zapier webhook requests through your secure backend endpoint. Events queue locally below until a backend endpoint is configured and verified.
+                </div>
+                <form id="zapierConfigForm" class="stack-form">
+                  <div class="form-group">
+                    <label for="zapierEndpointInput">Secure Backend Webhook Proxy URL</label>
+                    <input type="url" id="zapierEndpointInput" placeholder="https://your-backend.example.com/api/zapier-events">
+                  </div>
+                  <div class="form-actions wrap-actions">
+                    <button type="submit" class="btn btn-primary btn-sm">Save Endpoint</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="testZapierBtn">Send Test Event</button>
+                    <button type="button" class="btn btn-ghost btn-sm" id="clearZapierOutboxBtn">Clear Log</button>
+                  </div>
+                </form>
+                <div class="outbox-list" id="zapierOutboxList"></div>
+              </div>
+            </article>
+
+            <!-- ElevenLabs Voice Assistant -->
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Voice Assistant (ElevenLabs)</h2>
+                  <p class="card-desc">Text-to-speech for AI answers, reminders &amp; study explanations</p>
+                </div>
+                <span class="badge badge-today" id="elevenLabsStatusBadge">Setup Required</span>
+              </div>
+              <div class="card-body">
+                <div class="info-callout">
+                  Store your ElevenLabs <code>xi-api-key</code> strictly on your backend server. Configure a TTS proxy URL below that returns audio.
+                </div>
+                <form id="voiceConfigForm" class="stack-form">
+                  <div class="form-group">
+                    <label for="elevenLabsEndpointInput">Secure Backend TTS Proxy URL</label>
+                    <input type="url" id="elevenLabsEndpointInput" placeholder="https://your-backend.example.com/api/elevenlabs-tts">
+                  </div>
+                  <div class="form-group">
+                    <label for="elevenLabsVoiceIdInput">Preferred Voice ID (Non-secret)</label>
+                    <input type="text" id="elevenLabsVoiceIdInput" placeholder="ELEVENLABS_VOICE_ID_PLACEHOLDER">
+                  </div>
+                  <label class="checkbox-row">
+                    <input type="checkbox" id="browserSpeechFallbackToggle" checked>
+                    <span>Allow browser speech preview fallback when backend TTS is not connected</span>
+                  </label>
+                  <div class="form-actions wrap-actions">
+                    <button type="submit" class="btn btn-primary btn-sm">Save Voice Config</button>
+                    <button type="button" class="btn btn-soft btn-sm" id="testVoiceSampleBtn">Listen: Study Reminder Sample</button>
+                  </div>
+                </form>
+              </div>
+            </article>
+
+            <!-- Study Resources & Botpress Shortcut -->
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Botpress &amp; NotebookLM Quick Status</h2>
+                  <p class="card-desc">Frontend embed &amp; separate knowledge preparation workflow</p>
+                </div>
+              </div>
+              <div class="card-body stack-form">
+                <div class="integration-mini-row">
+                  <div>
+                    <strong>Botpress Webchat Embed</strong>
+                    <div class="task-due-meta" id="hubBotpressMeta">Waiting for official embed script URLs</div>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" data-nav-target="assistant">Open AI Section</button>
+                </div>
+                <div class="integration-mini-row">
+                  <div>
+                    <strong>NotebookLM Workflow</strong>
+                    <div class="task-due-meta">Manual study-pack export &amp; notebook link (no API invented)</div>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" data-nav-target="documents">Open Study Resources</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile Navigation">
+      <button type="button" class="bottom-nav-item is-active" data-view="dashboard" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="9" rx="2"></rect>
+          <rect x="14" y="3" width="7" height="5" rx="2"></rect>
+          <rect x="14" y="12" width="7" height="9" rx="2"></rect>
+          <rect x="3" y="16" width="7" height="5" rx="2"></rect>
+        </svg>
+        <span>Home</span>
+      </button>
+
+      <button type="button" class="bottom-nav-item" data-view="tasks">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 11l3 3L22 4"></path>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+        </svg>
+        <span>Tasks</span>
+      </button>
+
+      <button type="button" class="bottom-nav-item" data-view="deadlines">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>Deadlines</span>
+      </button>
+
+      <button type="button" class="bottom-nav-item" data-view="assistant">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>AI Chat</span>
+      </button>
+
+      <button type="button" class="bottom-nav-item" id="mobileMoreBtn" data-action="open-drawer" aria-label="More academic tools">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span>More</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Notification History Panel -->
+  <div class="notif-backdrop" id="notifBackdrop" aria-hidden="true"></div>
+  <aside class="notif-panel" id="notificationPanel" aria-label="Notification History" hidden>
+    <div class="notif-panel-header">
+      <div>
+        <h2 class="card-title">Deadline Reminders</h2>
+        <p class="card-desc" id="notifPanelSubtitle">0 unread reminders</p>
+      </div>
+      <button type="button" class="icon-btn" id="closeNotifPanelBtn" aria-label="Close notification panel">Close</button>
+    </div>
+
+    <div class="notif-panel-note">
+      Level 1 reminders check Pending &amp; In Progress tasks (3 days, 24h, 6h, and overdue) while ADAPTIX is open in your browser.
+    </div>
+
+    <div class="notif-panel-toolbar">
+      <button type="button" class="btn btn-ghost btn-sm" id="markAllNotifReadBtn">Mark all read</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="clearNotifHistoryBtn">Clear history</button>
+    </div>
+
+    <div class="notif-panel-body" id="notifHistoryList"></div>
+  </aside>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
